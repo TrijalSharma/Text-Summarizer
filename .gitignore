@@ -218,3 +218,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# My virtual environment
+text_env/
+
+# Security for future API keys
+.env
