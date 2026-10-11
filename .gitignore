@@ -228,5 +228,10 @@ __pycache__/
 *.pyc
 .DS_Store
 
+# Gradio artifacts
+flagged/
+gradio/
+.gradio/
+
 # Security for future API keys
 .env
