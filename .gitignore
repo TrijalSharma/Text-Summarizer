@@ -222,5 +222,11 @@ __marimo__/
 # My virtual environment
 text_env/
 
+artifacts/
+text_env/
+__pycache__/
+*.pyc
+.DS_Store
+
 # Security for future API keys
 .env
