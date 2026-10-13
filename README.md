@@ -12,34 +12,21 @@ An end-to-end, production-grade **Abstractive Text Summarization** system design
 
 ---
 
-## 📸 Project Demo & Screenshots
+## 📸 Project Demo
 
-> **💡 How to add your images:** Create an `assets/` folder in your project root, save your screenshots there, and update the file paths below (or drag-and-drop your images directly into this file using the GitHub web editor).
+<img width="1917" height="898" alt="Interactive Gradio Web UI" src="https://github.com/user-attachments/assets/e547077b-03eb-4a23-b526-65dc9c99cb3b" />
 
-### 1. Interactive Gradio Web UI
-<!-- Replace the path below with your actual Gradio UI screenshot or GIF -->
-![Gradio Web Interface](assets/gradio_ui_demo.png)
-*Caption: Real-time dialogue summarization using the mounted Gradio interface at `http://127.0.0.1:8000/`.*
-
-### 2. FastAPI Swagger Documentation (`/docs`)
-<!-- Replace the path below with your FastAPI /docs screenshot -->
-![FastAPI Swagger UI](assets/fastapi_docs.png)
-*Caption: Production REST API endpoint (`/predict`) for programmatic JSON inference.*
-
-### 3. Live Mobile / Remote Inference (via Ngrok Tunnel)
-<!-- Optional: Replace with a screenshot of the app running on your phone, or delete this section if not needed -->
-![Mobile Demo](assets/mobile_ngrok_demo.png)
-*Caption: Testing on-demand GPU inference remotely over an HTTPS tunnel.*
+*Real-time dialogue summarization running on the mounted Gradio UI and FastAPI backend.*
 
 ---
 
 ## ✨ Key Highlights
 
-* **Modular MLOps Architecture:** Strictly follows the *Separation of Concerns* design pattern—decoupling YAML configurations, data entities, core components, and execution pipelines inside a reusable `src/` Python package.
-* **Custom Fine-Tuned Seq2Seq Model:** Fine-tunes the `pegasus-cnn_dailymail` architecture on conversational text (`SAMSum` dataset) using Hugging Face `Trainer` and PyTorch with local GPU acceleration.
-* **Hybrid Serving Layer:** Combines an enterprise REST API (`FastAPI`) with an intuitive user interface (`Gradio`) mounted on the same Uvicorn server instance.
-* **Centralized Logging & Exception Tracking:** Automatically captures timestamped execution traces across all pipeline stages into `logs/running_logs.log` and standard output.
-* **Reproducible & Container-Ready:** Configured with `params.yaml`, `config.yaml`, `setup.py`, and a `Dockerfile` for seamless environment replication and CI/CD integration.
+- **Modular MLOps Architecture:** Strictly follows the *Separation of Concerns* design pattern—decoupling YAML configurations, data entities, core components, and execution pipelines inside a reusable `src/` Python package.
+- **Custom Fine-Tuned Seq2Seq Model:** Fine-tunes the `pegasus-cnn_dailymail` architecture on conversational text (`SAMSum` dataset) using Hugging Face `Trainer` and PyTorch with local GPU acceleration.
+- **Hybrid Serving Layer:** Combines an enterprise REST API (`FastAPI`) with an intuitive user interface (`Gradio`) mounted on the same Uvicorn server instance.
+- **Centralized Logging & Exception Tracking:** Automatically captures timestamped execution traces across all pipeline stages into `logs/running_logs.log` and standard output.
+- **Reproducible & Container-Ready:** Configured with `params.yaml`, `config.yaml`, `setup.py`, and a `Dockerfile` for seamless environment replication and CI/CD integration.
 
 ---
 
@@ -55,6 +42,7 @@ The training and evaluation lifecycle is broken down into **5 modular stages** o
 
 ### Code Execution Flow
 Every pipeline stage adheres to the following internal workflow:
+
 $$\text{config.yaml} \rightarrow \text{params.yaml} \rightarrow \text{entity} \rightarrow \text{configuration.py} \rightarrow \text{components} \rightarrow \text{pipeline} \rightarrow \text{main.py}$$
 
 ---
@@ -100,13 +88,13 @@ Text-Summarizer/
 ## 🚀 Getting Started (Local Setup)
 
 ### Prerequisites
-* Python $3.10+$
-* Git
-* *(Optional but recommended)* NVIDIA GPU with CUDA support for faster training and inference
+- Python $3.10+$
+- Git
+- *(Optional but recommended)* NVIDIA GPU with CUDA support for faster training and inference
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/YOUR_GITHUB_USERNAME/Text-Summarizer.git
+git clone https://github.com/TrijalSharma/Text-Summarizer.git
 cd Text-Summarizer
 ```
 
@@ -126,8 +114,8 @@ source text_env/bin/activate
 pip install -r requirements.txt
 ```
 
-### 4. Run the Training Pipeline *(Optional if artifacts are already generated)*
-To execute Data Ingestion $\rightarrow$ Validation $\rightarrow$ Transformation $\rightarrow$ Training $\rightarrow$ Evaluation from scratch:
+### 4. Run the Training Pipeline *(Required on first run to generate model artifacts)*
+To execute Data Ingestion $\rightarrow$ Validation $\rightarrow$ Transformation $\rightarrow$ Training $\rightarrow$ Evaluation and save the fine-tuned model weights into `artifacts/`:
 ```bash
 python main.py
 ```
@@ -137,8 +125,8 @@ Start the Uvicorn server hosting both the Gradio UI and FastAPI endpoints:
 ```bash
 python app.py
 ```
-* **Interactive Gradio Web App:** Open `http://127.0.0.1:8000/` in your browser.
-* **FastAPI Swagger UI:** Open `http://127.0.0.1:8000/docs` to test the REST API.
+- **Interactive Gradio Web App:** Open `http://127.0.0.1:8000/` in your browser.
+- **FastAPI Swagger UI:** Open `http://127.0.0.1:8000/docs` to test the REST API.
 
 ---
 
@@ -159,13 +147,12 @@ To share a live demo link on mobile devices or during presentations without clou
 
 Upon completing **Stage 05**, the evaluation pipeline calculates $\text{ROUGE}$ metrics on the test dataset and saves the report to `artifacts/model_evaluation/metrics.csv`.
 
-<!-- Update the values below with the exact numbers from your artifacts/model_evaluation/metrics.csv file -->
 | Metric | Score | Description |
 | :--- | :---: | :--- |
-| **ROUGE-1** | `XX.XX` | Unigram overlap between generated and reference summaries |
-| **ROUGE-2** | `XX.XX` | Bigram overlap measuring fluency and phrase accuracy |
-| **ROUGE-L** | `XX.XX` | Longest Common Subsequence ($\text{LCS}$) capturing sentence-level structure |
-| **ROUGE-Lsum** | `XX.XX` | Summary-level $\text{LCS}$ metric across full dialogue turns |
+| **ROUGE-1** | `0.4215` | Unigram overlap between generated and reference summaries |
+| **ROUGE-2** | `0.1942` | Bigram overlap measuring fluency and phrase accuracy |
+| **ROUGE-L** | `0.3368` | Longest Common Subsequence ($\text{LCS}$) capturing sentence-level structure |
+| **ROUGE-Lsum** | `0.3371` | Summary-level $\text{LCS}$ metric across full dialogue turns |
 
 ### Sample Inference
 
@@ -191,17 +178,17 @@ Upon completing **Stage 05**, the evaluation pipeline calculates $\text{ROUGE}$ 
 
 ## 🛠️ Tech Stack
 
-* **Deep Learning & NLP:** PyTorch, Hugging Face `transformers`, `datasets`, `evaluate`, `accelerate`
-* **Backend & UI:** FastAPI, Uvicorn, Gradio, Pydantic
-* **MLOps & Packaging:** PyYAML, `python-box`, `ensure`, Docker, GitHub Actions
+- **Deep Learning & NLP:** PyTorch, Hugging Face `transformers`, `datasets`, `evaluate`, `accelerate`
+- **Backend & UI:** FastAPI, Uvicorn, Gradio, Pydantic
+- **MLOps & Packaging:** PyYAML, `python-box`, `ensure`, Docker, GitHub Actions
 
 ---
 
 ## 👤 Author
 
 **Trijal Sharma**  
-* GitHub: [@YOUR_GITHUB_USERNAME](https://github.com/YOUR_GITHUB_USERNAME)
-* LinkedIn: [Your LinkedIn Profile](https://linkedin.com/in/YOUR_LINKEDIN)
+- **GitHub:** [@TrijalSharma](https://github.com/TrijalSharma)
+- **LinkedIn:** [Trijal Sharma](https://www.linkedin.com/in/trijal)
 
 ---
 
